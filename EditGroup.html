@@ -1,0 +1,75 @@
+<head>
+    <script src="https://code.jquery.com/jquery-1.7.1.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javasctript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div> Group Name: <input id="GroupTitle"></div>
+<div> Group Members: </div>
+<table id="Users">
+    <tr>
+        <th>Member Name</th><th>Member Contact</th>
+    </tr>
+</table>
+<div>
+<button id="userAdd">Add another member</button>
+</div>
+<div>
+<button id="submit">Submit</button>
+</div>
+
+<script>
+    var group = sessionStorage.getItem("editGroup");
+    $("#GroupTitle").val(group);
+    var users = JSON.parse(localStorage.getItem(group));
+    function getUsers () {
+        $(".memberName").each( function (index) {
+            if (index===0) users[0] = [$(this).val(), $(".memberContact:eq(0)").val()];
+            else users[index]= [$(this).val(), $(".memberContact:eq("+index+")").val()];
+        });
+        return users;
+    }
+        
+    for (var i=0;i<users.length;i++)
+    {
+        $( "<tr><td><input class='memberName' value='"+users[i][0]+"'></input></td><td><input class='memberContact' value='"+users[i][1]+"'></input></td><td><button class='delete'> Remove this member </button></td></tr>" ).appendTo( "#Users" );
+    }
+
+    $("#userAdd").on("click", function () {
+        $( "<tr><td><input class='memberName'/></td><td><input class='memberContact'/></td><td><button class='delete'> Remove this member </button></td></tr>" ).appendTo( "#Users" );
+        $(".delete").on("click", function () {
+            $(this).parent().parent().remove();
+            return;
+        });
+    });
+    
+    $("#submit").on("click", function () {
+        var groups = (localStorage.getItem("groups")).split(",");
+        for (var i = 0; i<groups.length; i++)
+        {
+            if (groups[i] == group)
+            {
+                groups[i] = $("#GroupTitle").val();
+            }
+        }
+        localStorage.setItem("groups", groups);
+        localStorage.removeItem(group);
+        localStorage.setItem($("#GroupTitle").val(), JSON.stringify(getUsers()));
+        window.location.href = "./MainPage.html";
+    });
+    
+    $(".delete").on("click", function () {
+        $(this).parent().parent().remove();
+        return;
+    });
+</script>
+
+</body>

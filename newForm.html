@@ -1,0 +1,247 @@
+<head>
+    <title>Invoicing</title>
+    <script src="https://code.jquery.com/jquery-1.7.1.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javasctript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+    <script tpye="text/javascript" src="newform.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+
+
+	<style type = "text/css">
+	input, textarea{
+    border: 1px solid #FFF;
+	}
+
+.container input:hover, .container textarea:hover, 
+.table-striped > tbody > tr:nth-child(2n+1) > td input:hover,
+.container input:focus, .container textarea:focus, 
+.table-striped > tbody > tr:nth-child(2n+1) > td input:focus{
+    border: 1px solid #CCC;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td input{
+    background-color: #F9F9F9;
+    border: 1px solid #F9F9F9;
+}
+
+body{
+    padding:20px;
+}
+
+.infos input{
+    width: 300px;
+    border-color:aqua;
+    border: 1px dashed #000000; 
+    outline:0; 
+}
+
+.align-right input{
+    text-align:right;
+    width: 300px;
+}
+
+div.container{
+    width: 1000px;
+    max-width: 1000px;
+}
+.prospect{
+
+    border-color:aqua;
+    border: 1px dashed #000000; 
+    outline:0; 
+}
+.percentage{
+
+    border-color:aqua;
+    border: 1px dashed #000000; 
+    outline:0; 
+}
+        
+#imgInp{
+    display: none;
+}
+        
+.container{
+    position:fixed;
+    left:15%;
+    top: 150px;
+}
+
+
+.copy {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    width: 100%;
+    margin: 40px 0 20px 0;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #404040;
+    cursor: default;
+    line-height: 1.4em;
+}
+.ccurency{
+    width:10px;
+}
+#header {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 120px;
+	background: #FFF url("http://www.wathelp.ca/images/mainbg.png") no-repeat center center;
+	background-size: cover;
+	/*border-bottom: 3px solid gray;*/
+	box-shadow: 0px 2px 10px #999;
+	z-index: 2;
+}
+#title_tut {
+	position: absolute;
+	top: 0px;
+	right: 200px;
+	width: 300px;
+	height: 120px;
+	line-height: 120px;
+	font-family: Avenir-Light;
+	font-weight: 300;
+	color: #FFF;
+	font-size: 75px;
+	text-align: center;
+}
+#title_tut a{
+    text-decoration:none;
+    color:#FFF;
+}
+        
+#title span#bold, #title_tut span#bold {
+	font-family: Avenir-Bold;
+}
+
+#tut {
+	background: #FFF;
+	/*background: #2B607E;*/
+}
+@media print {
+    .container {
+    position:fixed;
+    left:2%;
+    top:20px;
+    }
+    .noPrint, #header {
+        display:none;
+    }
+    @page {
+        size: landscape
+    }   
+}
+</style>
+	
+<script>
+    $(function hello() {
+        $(".datepicker").datepicker({});
+    });
+    
+    
+</script>
+
+
+</head>
+<body ng:app="jqanim" ng:controller="InvoiceController" id ="tut">
+    <div id="css">
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    </div>
+    <div id = "header">
+    
+    <div id="title_tut">
+        <a href="MainPage.html">
+			Tech<span id="bold">SOS</span>
+        </a>
+		</div>
+    </div>
+    <div class="container" width="1000px" id="invoice">
+        
+        <table class="table">
+            <tr>
+                <td align="center" style="background-color:#357EBD;color:#FFF" colspan="2">
+                    Ticket Creator
+                </td>
+            </tr>
+        </table>
+        <table class="spPeoplePickerTable" width="50%" cellpadding="10" cellspacing="1">
+
+
+</table>
+        <table class="table">
+            <tr>
+                <td>
+                    <div class="infos">
+                    <div>Assignee: <input type="text" id = "Assignee" /></div>    
+                    <div>Date Assigned: <input type="text" id = "datFrom" ng-model="invoice.employee_info.dateFrom"class="datepicker" /></div>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+        
+        <table class="table table-striped" id = "thetable" align="center">
+            <tr>
+                <th></th>
+                <th>Date Due</th>
+                <th>Groups</th>
+                <th>Employee Assigned</th>
+                <th>Description</th>
+				<th>Attachments</th>
+
+            </tr>
+
+            
+            
+            <tr class = "emptyRow inputRow" ng:repeat="item in invoice.items" style="display: none" jq:animate="dropdown;250">
+                <td><a href ng-hide="printMode" ng-click="removeItem(item)" class="btn btn-danger">[X]</a></td>
+                <td><input ng:model="item.date" placeholder="dd/mm/yyyy" size = "10"class = "datee"></td>
+                <td>
+                <select class="mydropdown" onclick = "employeeFiller()">
+                    <option value = "">Select</option>
+                </select>
+                </td>
+                <td>
+                <select ng-model = "selectedCustomer"class="employeeAssigned">
+                    <option value ="">Select</option>
+                </select>    
+                </td>
+                <td><input style = "display:none" size="30" class = "description" placeholder = "Description of Task"></td>                
+                
+                    
+                   <td><div action="/" method="post" name="upload" class="fileUpload">
+  <input type="file" name="file" class="file" />
+<div class="moreUploads"></div>
+<div class="moreUploadsLink"><a class="anotherFile" href="">Attach another File</a></div>
+</div></td>
+
+
+            </tr>
+
+            <tr ng-hide="printMode">
+                <td colspan="5"><a class="btn btn-primary" href ng:click="addItem()" onclick = "filling()">Add Item</a></td>
+				<td colspan="4" align="right">
+                    
+                </td>
+            </tr>
+
+            
+</table>
+<div class="noPrint">
+    <a href="#" class="btn btn-primary" ng-show="printMode" ng-click="printInfo()">Print</a>
+    <a href="#" class="btn btn-primary" ng-click="clearLocalStorage()">Reset</a>
+    <a href="#" class="btn btn-primary" ng-hide="printMode" ng-click="printMode = true;">Turn On Print Mode</a>
+    <a href="#" class="btn btn-primary" ng-show="printMode" ng-click="printMode = false;">Turn Off Print Mode</a>
+    <a id="uploadButton" class="btn btn-primary" onclick="requiredFields()">Submit</a>
+</div>
+
+</div>
+
+</body>
+

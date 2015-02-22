@@ -1,0 +1,333 @@
+<head>  
+    <script src="https://code.jquery.com/jquery-1.7.1.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javasctript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<style type="text/css">
+    /* CSS DOCUMENT */
+@font-face {
+	font-family: Avenir-Bold;
+	src: url("fonts/AvenirLTStd-Black.otf");
+}
+
+@font-face {
+	font-family: Avenir-Light;
+	src: url("fonts/avenirLight.ttf");
+}
+
+@font-face {
+	font-family: Avenir;
+	src: url('fonts/avenirRegular.ttf');
+}
+
+@font-face {
+	font-family: Neou-Bold;
+	src: url('fonts/Neou-Bold.otf');
+}
+
+body {
+	background: #2B607E url("http://www.wathelp.ca/images/mainbg.png") no-repeat;
+	background-size: cover;
+}
+
+body#tut {
+	background: #FFF;
+	/*background: #2B607E;*/
+}
+
+#title {
+	position: absolute;
+	top: 200px;
+	left: 0px;
+	width: 100%;
+	height: 80px;
+	font-family: Avenir-Light;
+	font-weight: 300;
+	color: #FFF;
+	font-size: 100px;
+	text-align: center;
+	text-shadow: 3px 3px 2px #000;
+}
+
+#title_tut {
+	position: absolute;
+	top: 0px;
+	right: 200px;
+	width: 300px;
+	height: 120px;
+	line-height: 120px;
+	font-family: Avenir-Light;
+	font-weight: 300;
+	color: #FFF;
+	font-size: 75px;
+	text-align: center;
+	/*text-shadow: 3px 3px 2px #000;*/
+}
+
+#title_tut a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+#title span#bold, #title_tut span#bold {
+	font-family: Avenir-Bold;
+}
+
+#slogan {
+	position: absolute;
+	top: 350px;
+	left: 0px;
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	font-family: Avenir;
+	font-size: 30px;
+	color: #EEE;
+	text-shadow: 2px 2px 3px #000;
+}
+
+#buttons {
+	position: absolute;
+	top: 500px;
+	left: calc(50% - 200px);
+	width: 400px;
+	height: 50px;
+}
+
+#buttons ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+#buttons ul li a {
+	float: left;
+	text-decoration: none;
+	width: 150px;
+	height: 27px;
+	background: #E74C3C;
+	color: #FFF;
+	text-align: center;
+	line-height: 27px;
+	font-family: Avenir;
+	border-radius: 3px;
+	padding: 15px;
+	margin-left: 10px;
+	-webkit-transition: background 0.2s;
+}
+
+#buttons ul li a:hover {
+	background: #d63b2c;
+}
+
+#header {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 120px;
+	background: #FFF url("http://www.wathelp.ca/images/mainbg.png") no-repeat center center;
+	background-size: cover;
+	/*border-bottom: 3px solid gray;*/
+	box-shadow: 0px 2px 10px #999;
+	z-index: 2;
+}
+
+#tutor_heading {
+	position: absolute;
+	top: 0px;
+	left: 50px;
+	width: 300px;
+	height: 120px;
+	text-align: center;
+	line-height: 120px;
+	font-size: 25px;
+	font-family: Avenir-Bold;
+	color: #FFF;
+}
+
+#content {
+	position: absolute;
+	top: 150px;
+	left: calc(50% - 220px);
+	width: 410px;
+	height: auto;
+	background: #eee;
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 50px;
+}
+
+#content p {
+	margin: 0px;
+	padding: 10px;
+	font-family: Avenir;
+	font-size: 19px;
+}
+
+#course_input_window {
+	height: 200px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+select {
+	padding: 2px;
+	font-family: Avenir;
+}
+
+.form-container {
+	position: absolute;
+	top: 200px;
+	left: calc(50% - 200px);
+	width: 400px;
+	height: 190px;
+	background: #eee;
+	border-radius: 5px;
+}
+
+
+.text-field {
+	font-family: Avenir;
+	margin-left: 80px;
+	margin-bottom: 20px;
+	padding: 5px 5px 5px 5px;
+}
+
+
+
+
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 50px;
+	/*background: rgba(250, 250, 250, 0.3);*/
+}
+
+#footer ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+#footer ul li a {
+	float: left;
+	text-decoration: none;
+	width: 25%;
+	height: 50px;
+	text-align: center;
+	line-height: 55px;
+	font-family: Avenir;
+	color: #FFF;
+}
+
+
+#groups{    	
+    position: absolute;
+	top: 600px;
+	left: calc(50% - 95px);
+	width: 150px;
+	height: 27px;
+	background: #222;
+	color: #FFF;
+	text-align: center;
+	line-height: 27px;
+	font-family: Avenir;
+	border-radius: 3px;
+	padding: 15px;
+	-webkit-transition: background 0.2s;	
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+    		<div id="title">
+			Tech<span id="bold">SOS</span>
+		</div>
+<div class ="container-fluid">
+<select id="groups">
+<option value="blank" />
+</select>
+<table>
+</table>
+<br/>
+    <div id = "buttons"><ul>
+        <li><a href="./NewGroup.html">Make a new group</a></li>
+        <li><a href = "./newForm.html">Task</a></li>
+        </ul></div>
+<button id="edit" class="hideMe" style="display:none">Edit this group</button>
+<button id="delete" class="hideMe" style="display:none">Delete this group</button>
+    </div>
+
+<script>
+    
+    var groups = localStorage.getItem("groups");
+    groups = groups.split(",");
+    for(var i = 0; i<groups.length; i++)
+    {
+        if (groups.length>0)
+        $("<option value="+groups[i]+" id="+groups[i]+">"+groups[i]+"</option>").appendTo("#groups");
+    }
+    
+    $("#groups").on("change", function () {
+        if ($("#groups").val()=="blank"){
+            $(".hideme").css("display","none");
+            $("table").html("");
+        }
+        else {
+            $("table").html("");
+            var memberList = JSON.parse(localStorage.getItem($("#groups").val()));
+            for (var i = 0; i<memberList.length; i++)
+            {
+                $("table").append("<tr><td>"+memberList[i][0]+"</td><td>"+memberList[i][1]+"</td></tr>");
+            }
+            $(".hideme").css("display","inline");
+        }
+    });
+    
+    $("#delete").on("click", function () {
+        localStorage.removeItem($("#groups").val());
+        var length = groups.length;
+        var found = false;
+        for (var i = 0; i<length; i++)
+        {
+            if (found) {
+                groups[i-1] = groups[i];
+                groups[i] = undefined;
+            }
+            if (groups[i]==$("#groups").val())
+            {
+                groups[i] = undefined;
+                found = true;
+            }
+        }
+        var newgroups = [];
+        for (var i =0;1==1;i++)
+        {
+            if (groups[i] != null) newgroups[i]=groups[i];  
+            else break;
+        }
+        groups = newgroups;       
+        if (groups.length>0) localStorage.setItem("groups",JSON.stringify(groups));
+        else localStorage.removeItem("groups");
+        $("#"+$("#groups").val()).remove();
+        document.getElementById("groups").selectedIndex = 0;
+        $(".hideme").css("display","none");
+        $("table").html("");
+    });
+    
+    $("#edit").on("click", function () {
+        sessionStorage.setItem("editGroup",$("select").val());        
+        window.location.href = "./EditGroup.html";
+    });
+        
+</script>
+</body>
