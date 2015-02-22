@@ -6,24 +6,20 @@
   "scripts": {
     "start": "node index.js"
   },
-  "private" : "true",
+  "private": "true",
   "dependencies": {
     "express": "~4.9.x",
-    "body-parser": "^1.5.0",
-    "fs": "0.0.1",
     "http": "0.0.0",
-    "logfmt": "^1.1.2",
-    "passport": "^0.2.0",
-    "passport-facebook": "^1.0.3",
-    "path": "^0.4.9",
-    "pg": "^2.11.1"
+    "mongodb": "^1.4.31",
+    "mongoose": "^3.8.23",
+    "passport": "^0.2.1"
   },
   "engines": {
     "node": "0.10.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/petersung21/TicketingApp.git"
+    "url": "https://github.com/petersung21/TechSOS.git"
   },
   "keywords": [
     "node",
