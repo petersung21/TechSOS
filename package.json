@@ -8,6 +8,7 @@
   },
   "private": "true",
   "dependencies": {
+    "body-parser": "^1.12.2",
     "express": "~4.9.x",
     "http": "0.0.0",
     "mongodb": "^1.4.31",
