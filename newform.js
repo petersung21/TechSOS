@@ -1,5 +1,21 @@
 
-    
+.config(function($routeProvider) {
+	$routeProvider.when('/mainpage', {
+		templateUrl: "MainPage.html"
+	});
+    $routeProvider.when('/newform', {
+        templateUrl: "newForm.html"
+    });
+    $routeProvider.when('/newgroup', {
+        templateUrl: "NewGroup.html"
+    });
+    $routeProvider.when('/editgroup', {
+        templateUrl: "EditGroup.html"
+    });
+//	.otherwise({redirectTo: '/dashboard.html'});
+})    
+
+
 var _result = [];
 $(document).ready(function () {
             var newData = [];
@@ -149,6 +165,30 @@ function InvoiceController($scope) {
     };
 };
 
+
+angular.module('dataBase' []).factory('$dataBase', ['$http',
+    function($http){
+        return {
+            create: function(params){
+                return $http({
+                    method: 'POST',
+                    url: "",
+                    data: $.param(params),
+                    header: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                });
+            },
+            getInfo: function(params){
+                return $http({
+                    method: 'GET',
+                    url: "",
+                    data: $.param(params),
+                    header: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                });
+            }
+            }
+        };
+    }
+]);
 
 
 angular.module('jqanim', []).directive('jqAnimate', function () {
