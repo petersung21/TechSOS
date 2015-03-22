@@ -1,11 +1,11 @@
 var express = require('express');
 var app = express();
+var http = require('http');
 var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient
     , format = require('util').format;
 var bodyParser = require('body-parser');
 var Schema = mongoose.Schema;
- 
  
 var fullInfo = new Schema ({
     datee: String,
@@ -37,96 +37,73 @@ app.all (function(req,res,next){
     next();
 });
 
+mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing')
+var db = mongoose.connection;
+db.once('open', function(){
 
 //https://arcane-refuge-1019.herokuapp.com
 app.get('/getJSON/:id', function (req,res,next){
-    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-    if (err){
-        console.log ("Connection Failed");
-    } else{
-        ticketInvoice.findById(req.params.id,function (err, results){
-            if (err){
-                console.log ("Error Dawgggg");
-            }else {
-                res.send (results);
-            }
-        });    
-    }
+    ticketInvoice.findById(req.params.id,function (err, results){
+        if (err){
+            console.log ("Error Dawgggg");
+        }else {
+            res.send (results);
+        }
     });
 });
 
 app.get('/getEverything:', function (req,res,next){
-    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-    if (err){
-        console.log ("Connection Failed");
-    } else{
-        return ticketInvoice.find(function (err, results){
-            if (err){
-                return res.send("Error Dawggg");
-            }else {
-                return console.log(results);
-            }
-        });
-    }
+    ticketInvoice.find(function (err, results){
+        if (err){
+            console.log("Error Dawggg");
+        }else {
+            res.send(results);
+        }
     });
 });
 
 app.post('/receiveJSON', function(req,res,next){
-    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-    if (err){
-        console.log ("Connection Failed");
-    } else{
-        var sendItem;
-        sendItem = new ticketInvoice({
-            fullInfo: req.body.invoice,
-            Assignee: req.body.invoice.employee_info.Assignee,
-            dateFrom: req.body.invoice.employee_info.dateFrom,
-            completeInfo: [fullInfo]
-        });
-        sendItem.save(function (err){
-            if (err){
-                console.log ("Something failed yoooo");
-            }else {
-                res.send("Check mongoDB duddeeee");
-            }
-        });
-        res.send (sendItem);
-    }
+    var sendItem;
+    sendItem = new ticketInvoice({
+        fullInfo: req.body.invoice,
+        Assignee: req.body.invoice.employee_info.Assignee,
+        dateFrom: req.body.invoice.employee_info.dateFrom,
+        completeInfo: [fullInfo]
     });
+    sendItem.save(function (err){
+        if (err){
+            console.log ("Something failed yoooo");
+        }else {
+            res.send("Check mongoDB duddeeee");
+        }
+    });
+    res.send (sendItem);
 });
 
 app.put('/updateJSON/:id', function(req,res,next){
-    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-    if (err){
-        console.log ("Connection Failed");
-    } else{
-        ticketInvoice.findById(req.params.id, function(err, results){
-            sendItem.fullInfo = req.body.invoice,
-            sendItem.Assignee = req.body.invoice.employee_info.Assignee,
-            sendItem.dateFrom = req.body.invoice.employee_info.dateFrom,
-            sendItem.completeINfo = req.body.items
-        });
-        res.send (sendItem);
-    }
+    ticketInvoice.findById(req.params.id, function(err, results){
+        sendItem.fullInfo = req.body.invoice,
+        sendItem.Assignee = req.body.invoice.employee_info.Assignee,
+        sendItem.dateFrom = req.body.invoice.employee_info.dateFrom,
+        sendItem.completeINfo = req.body.items
     });
+    res.send (sendItem);
 });
 
 app.delete('/deleteJSON/:id', function(req,res,next){
-    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-    if (err){
-        console.log ("Connection Failed");
-    } else{
-        ticketInvoice.findById(req.params.id, function(err,results){
-            sendItem.remove(function(err){
-            if (err){
-                console.log("Error bruhhhh");
-            }else {
-                res.send("Successfully Deleted bruhh");
-            }
+    ticketInvoice.findById(req.params.id, function(err,results){
+        sendItem.remove(function(err){
+        if (err){
+            console.log("Error bruhhhh");
+        }else {
+            res.send("Successfully Deleted bruhh");
+        }
         });
     });
-    }
-    });
+});
+    
+var server = http.createServer(app);
+server.listen(5000, function () {console.log("on port 5000")}); 
 });
 //mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
 //    if (err){
@@ -173,3 +150,4 @@ app.delete('/deleteJSON/:id', function(req,res,next){
 //    
 //    });
 //});
+        
