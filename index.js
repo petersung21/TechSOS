@@ -43,7 +43,7 @@ app.use (function(req,res,next){
     next();
 });
 //https://arcane-refuge-1019.herokuapp.com
-app.get('https://arcane-refuge-1019.herokuapp.com/getJSON/:id', function (req,res,next){
+app.get('/getJSON/:id', function (req,res,next){
     return ticketInvoice.findById(req.params.id,function (err, results){
         if (err){
             return console.log ("Error Dawgggg");
@@ -53,7 +53,7 @@ app.get('https://arcane-refuge-1019.herokuapp.com/getJSON/:id', function (req,re
     });    
 });
 
-app.get('https://arcane-refuge-1019.herokuapp.com/getEverything:', function (req,res,next){
+app.get('/getEverything:', function (req,res,next){
     return ticketInvoice.find(function (err, results){
         if (err){
             return console.log ("Error Dawggg");
@@ -63,7 +63,7 @@ app.get('https://arcane-refuge-1019.herokuapp.com/getEverything:', function (req
     });
 });
 
-app.post('https://arcane-refuge-1019.herokuapp.com/receiveJSON', function(req,res,next){
+app.post('/receiveJSON', function(req,res,next){
     var sendItem;
     sendItem = new ticketInvoice({
         fullInfo: req.body.invoice,
@@ -81,7 +81,7 @@ app.post('https://arcane-refuge-1019.herokuapp.com/receiveJSON', function(req,re
     return res.send (sendItem);
 });
 
-app.put('https://arcane-refuge-1019.herokuapp.com/updateJSON/:id', function(req,res,next){
+app.put('/updateJSON/:id', function(req,res,next){
     return ticketInvoice.findById(req.params.id, function(err, results){
         sendItem.fullInfo = req.body.invoice,
         sendItem.Assignee = req.body.invoice.employee_info.Assignee,
@@ -91,7 +91,7 @@ app.put('https://arcane-refuge-1019.herokuapp.com/updateJSON/:id', function(req,
     return res.send (sendItem);
 });
 
-app.delete('https://arcane-refuge-1019.herokuapp.com/deleteJSON/:id', function(req,res,next){
+app.delete('/deleteJSON/:id', function(req,res,next){
     return ticketInvoice.findById(req.params.id, function(err,results){
         return sendItem.remove(function(err){
             if (err){
