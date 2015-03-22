@@ -29,17 +29,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
-
-mongoose.connect('mongodb://usethisnow:devsung1@ds047571.mongolab.com:47571/db_ticketing')
-var db = mongoose.connection;
-db.once('open', function(){
-app.all (function(req,res,next){
+ 
+app.use (function(req,res,next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     next();
 });
-    
+
+mongoose.connect('mongodb://usethisnow:devsung1@ds047571.mongolab.com:47571/db_ticketing')
+var db = mongoose.connection;
+db.once('open', function(){
+
 //https://arcane-refuge-1019.herokuapp.com
 app.get('/getJSON/:id', function (req,res,next){
     ticketInvoice.findById(req.params.id,function (err, results){
@@ -81,17 +82,17 @@ app.post('/receiveJSON', function(req,res,next){
 
 app.put('/updateJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err, results){
-        sendItem.fullInfo = req.body.invoice,
-        sendItem.Assignee = req.body.invoice.employee_info.Assignee,
-        sendItem.dateFrom = req.body.invoice.employee_info.dateFrom,
-        sendItem.completeINfo = req.body.items
+        results.fullInfo = req.body.invoice,
+        results.Assignee = req.body.invoice.employee_info.Assignee,
+        results.dateFrom = req.body.invoice.employee_info.dateFrom,
+        results.completeINfo = req.body.items
     });
     res.send (sendItem);
 });
 
 app.delete('/deleteJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err,results){
-        sendItem.remove(function(err){
+        results.remove(function(err){
         if (err){
             res.send("Error bruhhhh");
         }else {
