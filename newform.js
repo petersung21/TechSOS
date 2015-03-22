@@ -1,19 +1,4 @@
-//
-//.config(function($routeProvider) {
-//	$routeProvider.when('/', {
-//		templateUrl: "MainPage.html"
-//	});
-//    $routeProvider.when('/newform', {
-//        templateUrl: "newForm.html"
-//    });
-//    $routeProvider.when('/newgroup', {
-//        templateUrl: "NewGroup.html"
-//    });
-//    $routeProvider.when('/editgroup', {
-//        templateUrl: "EditGroup.html"
-//    });
-//	.otherwise({redirectTo: '/dashboard.html'});
-//})    
+
 
 
 var _result = [];
@@ -99,7 +84,7 @@ function getFileBuffer(file){
 
 
 
-function InvoiceController($scope, $dataBase) {
+function InvoiceController($scope, $dataBase, $http) {
     
     localStorage["invoice"] = "";
     $scope.invoice = empty_invoice;
@@ -120,8 +105,29 @@ function InvoiceController($scope, $dataBase) {
 
     };
     $scope.clickthisshit = function (){
-        $dataBase.getAll();
+        $http({
+            method: 'GET',
+            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
+            header: { "Accept": "application/json;odata=verbose"}
+        }).success (function (data, status, headers, config){
+                   console.log (data);
+                   });
+        var x, y,z;
+        $dataBase.getAll().then(function (response){
+            x = response.data;
+            console.log (x);
+        });
+        $dataBase.getInfo("550dccec3be8f4709231f3a4").then(function(response){
+            y = response.data;
+            console.log(y);
+        });
+//        $dataBase.deleteThis("550dbda5bb8850d7915e5dce").then(function(response){
+//            z = response.data;
+//            console.log(z);
+//        });
     };
+    
+    
 
 
     if (localStorage["invoice"] == "" || localStorage["invoice"] == null) {
@@ -170,40 +176,50 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
     function($http){
         return {
             create: function(params){
-                return $http({
+                return ($http({
                     method: 'POST',
                     url: "https://arcane-refuge-1019.herokuapp.com/receiveJSON",
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                });
+                }).success(function(data,status,headers,config){
+                    return ("It Created Nigga");
+                }));
             },
-            getInfo: function(params, idlol){
-                return $http({
+            getInfo: function(idlol){
+                return ($http({
                     method: 'GET',
                     url: "https://arcane-refuge-1019.herokuapp.com/getJSON/" + idlol,
                     header: { "Accept": "application/json;odata=verbose" }
-                });
+                }).success(function(data,status,headers,config){
+                    return (data);
+                }));
             },
             getAll: function (){
-                return $http({
+                return ($http({
                     method: 'GET',
                     url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
                     header: { "Accept": "application/json;odata=verbose"}
-                });
+                }).success (function (data, status, headers, config){
+                        return (data);
+                }));
             },
             update: function (params, idlol){
-                return $http({
+                return ($http({
                     method: 'PUT',
-                    url: "https://arcane-refuge-1019.herokuapp.com/updateJSON" +idlol,
+                    url: "https://arcane-refuge-1019.herokuapp.com/updateJSON/" +idlol,
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-ww-form-urlencoded'}
-                });
+                }).success(function(data,status,headers,config){
+                    return ("it updated nigga");
+                }));
             },
-            deleteThis: function (params, idlol){
-                return $http({
+            deleteThis: function (idlol){
+                return ($http({
                     method: 'DELETE',
-                    url: "https://arcane-refuge-1019.herokuapp.com/updateJSON" +idlol
-                });
+                    url: "https://arcane-refuge-1019.herokuapp.com/deleteJSON/" +idlol
+                }).success(function(data,status,headers,config){
+                    return ("it deleted nigga");
+                }));
             }
         };
     }
@@ -214,6 +230,19 @@ angular.module('jqanim', ['dataBase']).directive('jqAnimate', function () {
     return function (scope, instanceElement) {
         setTimeout(function () { instanceElement.show('slow'); }, 0);
     }
+}).config(function($routeProvider) {
+	$routeProvider.when('/', {
+		templateUrl: "MainPage.html"
+	});
+    $routeProvider.when('/newform', {
+        templateUrl: "newForm.html"
+    });
+    $routeProvider.when('/newgroup', {
+        templateUrl: "NewGroup.html"
+    });
+    $routeProvider.when('/editgroup', {
+        templateUrl: "EditGroup.html"
+    });
 });
     
 

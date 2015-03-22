@@ -37,7 +37,7 @@ app.use (function(req,res,next){
     next();
 });
 
-mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing')
+mongoose.connect('mongodb://phsung:devsung1@ds047571.mongolab.com:47571/db_ticketing')
 var db = mongoose.connection;
 db.once('open', function(){
 
@@ -103,51 +103,7 @@ app.delete('/deleteJSON/:id', function(req,res,next){
 });
     
 });
-//mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-//    if (err){
-//        console.log ("Connection Failed");
-//    } else{
-//        return ticketInvoice.find(function (err, results){
-//            if (err){
-//                return res.send("Error Dawggg");
-//            }else {
-//                return console.log(results);
-//            }
-//        });
-//    }
-//    });
 
-//
-//mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-//    if (err){
-//        console.log ("Connection Failed");
-//    } else{
-//        return ticketInvoice.findById("550dbf3650caabe89162447b",function (err, results){
-//            if (err){
-//                console.log ("Error Dawgggg");
-//            }else {
-//                return console.log (results);
-//            }
-//        });
-//    }
-//    mongoose.connection.close();
-//});
-
-//
-//MongoClient.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing', function (err, db) {
-//    if(err) throw err;
-//
-//    var collection = db.collection('test_insert');
-//    collection.insert({c:2}, function(err, docs) {
-//        collection.find().toArray(function(err, results) {
-//            console.log (format("count = %s"),results.length)
-//            console.dir(results + "YOOO");
-//            // Let's close the db
-//            db.close();
-//    });
-//    
-//    });
-//});
 var port = process.env.PORT || 5000
 var server = http.createServer(app);
 server.listen(port, function () {console.log("on port 5000")}); 
