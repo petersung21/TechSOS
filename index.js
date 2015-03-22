@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
  
-app.all (function(req,res,next){
+app.use (function(req,res,next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -42,7 +42,7 @@ var db = mongoose.connection;
 db.once('open', function(){
 
 //https://arcane-refuge-1019.herokuapp.com
-app.get('/getJSON/:id', function (req,res,next){
+app.get('https://arcane-refuge-1019.herokuapp.com/getJSON/:id', function (req,res,next){
     ticketInvoice.findById(req.params.id,function (err, results){
         if (err){
             console.log ("Error Dawgggg");
@@ -52,7 +52,7 @@ app.get('/getJSON/:id', function (req,res,next){
     });
 });
 
-app.get('/getEverything', function (req,res,next){
+app.get('https://arcane-refuge-1019.herokuapp.com/getEverything', function (req,res,next){
     ticketInvoice.find(function (err, results){
         if (err){
             console.log("Error Dawggg");
@@ -62,7 +62,7 @@ app.get('/getEverything', function (req,res,next){
     });
 });
 
-app.post('/receiveJSON', function(req,res,next){
+app.post('https://arcane-refuge-1019.herokuapp.com/receiveJSON', function(req,res,next){
     var sendItem;
     sendItem = new ticketInvoice({
         fullInfo: req.body.invoice,
@@ -80,7 +80,7 @@ app.post('/receiveJSON', function(req,res,next){
     res.send (sendItem);
 });
 
-app.put('/updateJSON/:id', function(req,res,next){
+app.put('https://arcane-refuge-1019.herokuapp.com/updateJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err, results){
         sendItem.fullInfo = req.body.invoice,
         sendItem.Assignee = req.body.invoice.employee_info.Assignee,
@@ -90,7 +90,7 @@ app.put('/updateJSON/:id', function(req,res,next){
     res.send (sendItem);
 });
 
-app.delete('/deleteJSON/:id', function(req,res,next){
+app.delete('https://arcane-refuge-1019.herokuapp.com/deleteJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err,results){
         sendItem.remove(function(err){
         if (err){
