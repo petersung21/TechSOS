@@ -5,22 +5,21 @@ var MongoClient = require('mongodb').MongoClient
     , format = require('util').format;
 var bodyParser = require('body-parser');
 var Schema = mongoose.Schema;
-
-
-mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-    if (err){
-        console.log ("Connection Failed");
-        throw err;
-    }
-});
-
+ 
+ 
+//mongoose.connect('mongodb://phsung:asd@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+//    if (err){
+//        res.send("Connection Failed");
+//        throw err;
+//    }
+//});
 var fullInfo = new Schema ({
     datee: String,
     dropdown: String,
     selectedCustomer: String,
     description: String,
 });
-
+ 
 var ticketinvoice = new Schema ({
     title: {type:String, require: true},
     Assignee: {type:String, require: true},
@@ -29,79 +28,84 @@ var ticketinvoice = new Schema ({
     completeInfo: [fullInfo],
     modified: {type: Date, default: Date.now}
 });
-
+ 
 var ticketInvoice = mongoose.model('ticketI', ticketinvoice);
-
+ 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
-
+ 
 app.use (function(req,res,next){
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     next();
 });
-//https://arcane-refuge-1019.herokuapp.com
-app.get('/getJSON/:id', function (req,res,next){
-    return ticketInvoice.findById(req.params.id,function (err, results){
-        if (err){
-            return console.log ("Error Dawgggg");
-        }else {
-            return (results);
-        }
-    });    
-});
-
-app.get('/getEverything:', function (req,res,next){
-    ticketInvoice.find(function (err, results){
-        if (err){
-            res.send("Error Dawggg");
-        }else {
-            res.send(results);
-        }
-    });
-});
-
-app.post('/receiveJSON', function(req,res,next){
-    var sendItem;
-    sendItem = new ticketInvoice({
-        fullInfo: req.body.invoice,
-        Assignee: req.body.invoice.employee_info.Assignee,
-        dateFrom: req.body.invoice.employee_info.dateFrom,
-        completeInfo: [fullInfo]
-    });
-    sendItem.save(function (err){
-        if (err){
-            return console.log("Something failed yoooo");
-        }else {
-            return console.log("Check mongoDB duddeeee");
-        }
-    });
-    return res.send (sendItem);
-});
-
-app.put('/updateJSON/:id', function(req,res,next){
-    return ticketInvoice.findById(req.params.id, function(err, results){
-        sendItem.fullInfo = req.body.invoice,
-        sendItem.Assignee = req.body.invoice.employee_info.Assignee,
-        sendItem.dateFrom = req.body.invoice.employee_info.dateFrom,
-        sendItem.completeINfo = req.body.items
-    });
-    return res.send (sendItem);
-});
-
-app.delete('/deleteJSON/:id', function(req,res,next){
-    return ticketInvoice.findById(req.params.id, function(err,results){
-        return sendItem.remove(function(err){
+ 
+mongoose.connect('mongodb://phsung:Raptors123@ds047571.mongolab.com:47571/db_ticketing');
+var db = mongoose.connection;
+db.once('open', function(){
+    
+    //https://arcane-refuge-1019.herokuapp.com
+    app.get('/getJSON/:id', function (req,res,next){
+        ticketInvoice.findById(req.params.id,function (err, results){
             if (err){
-                return console.log("Error bruhhhh");
+                console.log ("Error Dawgggg");
             }else {
-                return console.log("Successfully Deleted bruhh");
+                res.send (results);
+            }
+        });    
+    });
+
+    app.get('/getEverything:', function (req,res,next){
+        ticketInvoice.find(function (err, results){
+            if (err){
+                console.log("Error Dawggg");
+            }else {
+                res.send(results);
             }
         });
     });
-});
 
+    app.post('/receiveJSON', function(req,res,next){
+        var sendItem;
+        sendItem = new ticketInvoice({
+            fullInfo: req.body.invoice,
+            Assignee: req.body.invoice.employee_info.Assignee,
+            dateFrom: req.body.invoice.employee_info.dateFrom,
+            completeInfo: [fullInfo]
+        });
+        sendItem.save(function (err){
+            if (err){
+                console.log ("Something failed yoooo");
+            }else {
+                res.send("Check mongoDB duddeeee");
+            }
+        });
+        res.send (sendItem);
+    });
 
+    app.put('/updateJSON/:id', function(req,res,next){
+        ticketInvoice.findById(req.params.id, function(err, results){
+            sendItem.fullInfo = req.body.invoice,
+            sendItem.Assignee = req.body.invoice.employee_info.Assignee,
+            sendItem.dateFrom = req.body.invoice.employee_info.dateFrom,
+            sendItem.completeINfo = req.body.items
+        });
+        res.send (sendItem);
+    });
+
+    app.delete('/deleteJSON/:id', function(req,res,next){
+        return ticketInvoice.findById(req.params.id, function(err,results){
+            return sendItem.remove(function(err){
+                if (err){
+                    console.log("Error bruhhhh");
+                }else {
+                    res.send("Successfully Deleted bruhh");
+                }
+            });
+        });
+    });
+    
+}); 
