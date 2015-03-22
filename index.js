@@ -52,7 +52,6 @@ app.get('/getJSON/:id', function (req,res,next){
             }
         });    
     }
-    mongoose.connection.close();
     });
 });
 
@@ -61,15 +60,14 @@ app.get('/getEverything:', function (req,res,next){
     if (err){
         console.log ("Connection Failed");
     } else{
-        ticketInvoice.find(function (err, results){
+        return ticketInvoice.find(function (err, results){
             if (err){
-                console.log("Error Dawggg");
+                return res.send("Error Dawggg");
             }else {
-                res.send(results);
+                return console.log(results);
             }
         });
     }
-    mongoose.connection.close();
     });
 });
 
@@ -94,7 +92,6 @@ app.post('/receiveJSON', function(req,res,next){
         });
         res.send (sendItem);
     }
-    mongoose.connection.close();
     });
 });
 
@@ -111,7 +108,6 @@ app.put('/updateJSON/:id', function(req,res,next){
         });
         res.send (sendItem);
     }
-    mongoose.connection.close();
     });
 });
 
@@ -130,18 +126,21 @@ app.delete('/deleteJSON/:id', function(req,res,next){
         });
     });
     }
-    mongoose.connection.close();
-    });
-    return ticketInvoice.findById(req.params.id, function(err,results){
-        return sendItem.remove(function(err){
-            if (err){
-                console.log("Error bruhhhh");
-            }else {
-                res.send("Successfully Deleted bruhh");
-            }
-        });
     });
 });
+//mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+//    if (err){
+//        console.log ("Connection Failed");
+//    } else{
+//        return ticketInvoice.find(function (err, results){
+//            if (err){
+//                return res.send("Error Dawggg");
+//            }else {
+//                return console.log(results);
+//            }
+//        });
+//    }
+//    });
 
 //
 //mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
