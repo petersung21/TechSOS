@@ -59,6 +59,7 @@ db.once('open', function(){
     });
 
     app.get('/getEverything:', function (req,res,next){
+            mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){    
         ticketInvoice.find(function (err, results){
             if (err){
                 console.log("Error Dawggg");
@@ -66,6 +67,7 @@ db.once('open', function(){
                 res.send(results);
             }
         });
+            });
     });
 
     app.post('/receiveJSON', function(req,res,next){
