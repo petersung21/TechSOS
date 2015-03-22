@@ -69,6 +69,10 @@ db.once('open', function(){
     });
 
     app.post('/receiveJSON', function(req,res,next){
+        mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+        if (err){
+            console.log("err");
+        }else{
         var sendItem;
         sendItem = new ticketInvoice({
             fullInfo: req.body.invoice,
@@ -84,6 +88,8 @@ db.once('open', function(){
             }
         });
         res.send (sendItem);
+        }
+        });
     });
 
     app.put('/updateJSON/:id', function(req,res,next){
@@ -109,3 +115,33 @@ db.once('open', function(){
     });
     
 }); 
+//mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+//    if (err){
+//        console.log ("Connection Failed");
+//    } else{
+//        return ticketInvoice.findById("550dbf3650caabe89162447b",function (err, results){
+//            if (err){
+//                console.log ("Error Dawgggg");
+//            }else {
+//                return console.log (results.completeInfo[0].datee);
+//            }
+//        });
+//    }
+//    mongoose.connection.close();
+//});
+
+//
+//MongoClient.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing', function (err, db) {
+//    if(err) throw err;
+//
+//    var collection = db.collection('test_insert');
+//    collection.insert({c:2}, function(err, docs) {
+//        collection.find().toArray(function(err, results) {
+//            console.log (format("count = %s"),results.length)
+//            console.dir(results + "YOOO");
+//            // Let's close the db
+//            db.close();
+//    });
+//    
+//    });
+//});
