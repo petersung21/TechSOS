@@ -184,7 +184,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     header: { "Accept": "application/json;odata=verbose" }
                 });
             },
-            getAll: function (params){
+            getAll: function (){
                 return $http({
                     method: 'GET',
                     url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
