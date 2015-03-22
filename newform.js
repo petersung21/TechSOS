@@ -113,18 +113,19 @@ function InvoiceController($scope, $dataBase, $http) {
                    console.log (data);
                    });
         var x, y,z;
-        $dataBase.getAll().then(function (response){
-            x = response.data;
-            console.log (x);
-        });
-        $dataBase.getInfo("550dccec3be8f4709231f3a4").then(function(response){
-            y = response.data;
-            console.log(y);
-        });
+//        $dataBase.getAll().then(function (response){
+//            x = response.data;
+//            console.log (x);
+//        });
+//        $dataBase.getInfo("550dccec3be8f4709231f3a4").then(function(response){
+//            y = response.data;
+//            console.log(y);
+//        });
 //        $dataBase.deleteThis("550dbda5bb8850d7915e5dce").then(function(response){
 //            z = response.data;
 //            console.log(z);
 //        });
+        
     };
     
     

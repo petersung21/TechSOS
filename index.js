@@ -37,7 +37,7 @@ app.use (function(req,res,next){
     next();
 });
 
-mongoose.connect('mongodb://phsung:devsung1@ds047571.mongolab.com:47571/db_ticketing')
+mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing')
 var db = mongoose.connection;
 db.once('open', function(){
 
