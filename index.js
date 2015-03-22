@@ -55,7 +55,7 @@ app.get('/getJSON/:id', function (req,res,next){
 });
 
 app.get('/getEverything:', function (req,res,next){
-    res.send ticketInvoice.find(function (err, results){
+    ticketInvoice.find(function (err, results){
         if (err){
             res.send("Error Dawggg");
         }else {
