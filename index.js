@@ -148,6 +148,7 @@ app.delete('/deleteJSON/:id', function(req,res,next){
 //    
 //    });
 //});
+var port = port.env.PORT || 5000;
 var server = http.createServer(app);
-server.listen(5000, function () {console.log("on port 5000")}); 
+server.listen(port, function () {console.log("on port 5000")}); 
         
