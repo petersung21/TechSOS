@@ -42,7 +42,7 @@ var db = mongoose.connection;
 db.once('open', function(){
 
 //https://arcane-refuge-1019.herokuapp.com
-app.get('https://arcane-refuge-1019.herokuapp.com/getJSON/:id', function (req,res,next){
+app.get('/getJSON/:id', function (req,res,next){
     ticketInvoice.findById(req.params.id,function (err, results){
         if (err){
             console.log ("Error Dawgggg");
@@ -52,7 +52,7 @@ app.get('https://arcane-refuge-1019.herokuapp.com/getJSON/:id', function (req,re
     });
 });
 
-app.get('https://arcane-refuge-1019.herokuapp.com/getEverything', function (req,res,next){
+app.get('/getEverything', function (req,res,next){
     ticketInvoice.find(function (err, results){
         if (err){
             console.log("Error Dawggg");
@@ -62,7 +62,7 @@ app.get('https://arcane-refuge-1019.herokuapp.com/getEverything', function (req,
     });
 });
 
-app.post('https://arcane-refuge-1019.herokuapp.com/receiveJSON', function(req,res,next){
+app.post('/receiveJSON', function(req,res,next){
     var sendItem;
     sendItem = new ticketInvoice({
         fullInfo: req.body.invoice,
@@ -80,7 +80,7 @@ app.post('https://arcane-refuge-1019.herokuapp.com/receiveJSON', function(req,re
     res.send (sendItem);
 });
 
-app.put('https://arcane-refuge-1019.herokuapp.com/updateJSON/:id', function(req,res,next){
+app.put('/updateJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err, results){
         sendItem.fullInfo = req.body.invoice,
         sendItem.Assignee = req.body.invoice.employee_info.Assignee,
@@ -90,7 +90,7 @@ app.put('https://arcane-refuge-1019.herokuapp.com/updateJSON/:id', function(req,
     res.send (sendItem);
 });
 
-app.delete('https://arcane-refuge-1019.herokuapp.com/deleteJSON/:id', function(req,res,next){
+app.delete('/deleteJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err,results){
         sendItem.remove(function(err){
         if (err){
@@ -102,8 +102,6 @@ app.delete('https://arcane-refuge-1019.herokuapp.com/deleteJSON/:id', function(r
     });
 });
     
-var server = http.createServer(app);
-server.listen(5000, function () {console.log("on port 5000")}); 
 });
 //mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
 //    if (err){
@@ -150,4 +148,6 @@ server.listen(5000, function () {console.log("on port 5000")});
 //    
 //    });
 //});
+var server = http.createServer(app);
+server.listen(5000, function () {console.log("on port 5000")}); 
         
