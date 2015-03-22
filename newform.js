@@ -1,6 +1,6 @@
 
 .config(function($routeProvider) {
-	$routeProvider.when('/mainpage', {
+	$routeProvider.when('/', {
 		templateUrl: "MainPage.html"
 	});
     $routeProvider.when('/newform', {
@@ -99,7 +99,7 @@ function getFileBuffer(file){
 
 
 
-function InvoiceController($scope) {
+function InvoiceController($scope, $dataBase) {
     
     localStorage["invoice"] = "";
     $scope.invoice = empty_invoice;
@@ -112,10 +112,7 @@ function InvoiceController($scope) {
         invoice_number: 0,
         employee_info: {
             name: "",
-            dateFrom: "",
-            dateTo: "",
-            payCompany: "",
-            payCurrency: ""
+            dateFrom: ""
         },
             items: [
           { qty: 0, description: "", cost: 0.00, totall:0,taxx:0, attach: 0 }
@@ -172,7 +169,7 @@ angular.module('dataBase' []).factory('$dataBase', ['$http',
             create: function(params){
                 return $http({
                     method: 'POST',
-                    url: "",
+                    url: "https://arcane-refuge-1019.herokuapp.com/",
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 });
@@ -180,7 +177,7 @@ angular.module('dataBase' []).factory('$dataBase', ['$http',
             getInfo: function(params){
                 return $http({
                     method: 'GET',
-                    url: "",
+                    url: "https://arcane-refuge-1019.herokuapp.com/",
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 });
@@ -191,7 +188,7 @@ angular.module('dataBase' []).factory('$dataBase', ['$http',
 ]);
 
 
-angular.module('jqanim', []).directive('jqAnimate', function () {
+angular.module('jqanim', ['dataBase']).directive('jqAnimate', function () {
     return function (scope, instanceElement) {
         setTimeout(function () { instanceElement.show('slow'); }, 0);
     }
