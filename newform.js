@@ -1,19 +1,19 @@
-
-.config(function($routeProvider) {
-	$routeProvider.when('/', {
-		templateUrl: "MainPage.html"
-	});
-    $routeProvider.when('/newform', {
-        templateUrl: "newForm.html"
-    });
-    $routeProvider.when('/newgroup', {
-        templateUrl: "NewGroup.html"
-    });
-    $routeProvider.when('/editgroup', {
-        templateUrl: "EditGroup.html"
-    });
+//
+//.config(function($routeProvider) {
+//	$routeProvider.when('/', {
+//		templateUrl: "MainPage.html"
+//	});
+//    $routeProvider.when('/newform', {
+//        templateUrl: "newForm.html"
+//    });
+//    $routeProvider.when('/newgroup', {
+//        templateUrl: "NewGroup.html"
+//    });
+//    $routeProvider.when('/editgroup', {
+//        templateUrl: "EditGroup.html"
+//    });
 //	.otherwise({redirectTo: '/dashboard.html'});
-})    
+//})    
 
 
 var _result = [];
@@ -166,7 +166,7 @@ function InvoiceController($scope, $dataBase) {
 };
 
 
-angular.module('dataBase' []).factory('$dataBase', ['$http',
+angular.module('dataBase', []).factory('$dataBase', ['$http',
     function($http){
         return {
             create: function(params){
@@ -204,7 +204,6 @@ angular.module('dataBase' []).factory('$dataBase', ['$http',
                     method: 'DELETE',
                     url: "https://arcane-refuge-1019.herokuapp.com/updateJSON" +idlol
                 });
-            },
             }
         };
     }
