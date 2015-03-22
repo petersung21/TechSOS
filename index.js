@@ -7,12 +7,6 @@ var bodyParser = require('body-parser');
 var Schema = mongoose.Schema;
  
  
-//mongoose.connect('mongodb://phsung:asd@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-//    if (err){
-//        res.send("Connection Failed");
-//        throw err;
-//    }
-//});
 var fullInfo = new Schema ({
     datee: String,
     dropdown: String,
@@ -42,13 +36,14 @@ app.all (function(req,res,next){
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     next();
 });
- 
-mongoose.connect('mongodb://phsung:Raptors123@ds047571.mongolab.com:47571/db_ticketing');
-var db = mongoose.connection;
-db.once('open', function(){
-    
-    //https://arcane-refuge-1019.herokuapp.com
-    app.get('/getJSON/:id', function (req,res,next){
+
+
+//https://arcane-refuge-1019.herokuapp.com
+app.get('/getJSON/:id', function (req,res,next){
+    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+    if (err){
+        console.log ("Connection Failed");
+    } else{
         ticketInvoice.findById(req.params.id,function (err, results){
             if (err){
                 console.log ("Error Dawgggg");
@@ -56,10 +51,16 @@ db.once('open', function(){
                 res.send (results);
             }
         });    
+    }
+    mongoose.connection.close();
     });
+});
 
-    app.get('/getEverything:', function (req,res,next){
-            mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){    
+app.get('/getEverything:', function (req,res,next){
+    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+    if (err){
+        console.log ("Connection Failed");
+    } else{
         ticketInvoice.find(function (err, results){
             if (err){
                 console.log("Error Dawggg");
@@ -67,14 +68,16 @@ db.once('open', function(){
                 res.send(results);
             }
         });
-            });
+    }
+    mongoose.connection.close();
     });
+});
 
-    app.post('/receiveJSON', function(req,res,next){
-        mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
-        if (err){
-            console.log("err");
-        }else{
+app.post('/receiveJSON', function(req,res,next){
+    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+    if (err){
+        console.log ("Connection Failed");
+    } else{
         var sendItem;
         sendItem = new ticketInvoice({
             fullInfo: req.body.invoice,
@@ -90,11 +93,16 @@ db.once('open', function(){
             }
         });
         res.send (sendItem);
-        }
-        });
+    }
+    mongoose.connection.close();
     });
+});
 
-    app.put('/updateJSON/:id', function(req,res,next){
+app.put('/updateJSON/:id', function(req,res,next){
+    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+    if (err){
+        console.log ("Connection Failed");
+    } else{
         ticketInvoice.findById(req.params.id, function(err, results){
             sendItem.fullInfo = req.body.invoice,
             sendItem.Assignee = req.body.invoice.employee_info.Assignee,
@@ -102,21 +110,40 @@ db.once('open', function(){
             sendItem.completeINfo = req.body.items
         });
         res.send (sendItem);
+    }
+    mongoose.connection.close();
     });
+});
 
-    app.delete('/deleteJSON/:id', function(req,res,next){
-        return ticketInvoice.findById(req.params.id, function(err,results){
-            return sendItem.remove(function(err){
-                if (err){
-                    console.log("Error bruhhhh");
-                }else {
-                    res.send("Successfully Deleted bruhh");
-                }
-            });
+app.delete('/deleteJSON/:id', function(req,res,next){
+    mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
+    if (err){
+        console.log ("Connection Failed");
+    } else{
+        ticketInvoice.findById(req.params.id, function(err,results){
+            sendItem.remove(function(err){
+            if (err){
+                console.log("Error bruhhhh");
+            }else {
+                res.send("Successfully Deleted bruhh");
+            }
         });
     });
-    
-}); 
+    }
+    mongoose.connection.close();
+    });
+    return ticketInvoice.findById(req.params.id, function(err,results){
+        return sendItem.remove(function(err){
+            if (err){
+                console.log("Error bruhhhh");
+            }else {
+                res.send("Successfully Deleted bruhh");
+            }
+        });
+    });
+});
+
+//
 //mongoose.connect('mongodb://phsung:Raptors12@ds047571.mongolab.com:47571/db_ticketing',function(err,db){
 //    if (err){
 //        console.log ("Connection Failed");
@@ -125,7 +152,7 @@ db.once('open', function(){
 //            if (err){
 //                console.log ("Error Dawgggg");
 //            }else {
-//                return console.log (results.completeInfo[0].datee);
+//                return console.log (results);
 //            }
 //        });
 //    }
