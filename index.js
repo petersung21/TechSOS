@@ -53,11 +53,11 @@ app.get('/getJSON/:id', function (req,res,next){
 });
 
 app.get('/getEverything:', function (req,res,next){
-    return ticketInvoice.find(function (err, results){
+    ticketInvoice.find(function (err, results){
         if (err){
             console.log("Error Dawggg");
         }else {
-            return console.log(results);
+            res.send(results);
         }
     });
 });
