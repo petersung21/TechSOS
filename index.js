@@ -57,7 +57,7 @@ app.get('/getEverything:', function (req,res,next){
         if (err){
             console.log("Error Dawggg");
         }else {
-            return res.send(results);
+            return console.log(results);
         }
     });
 });
