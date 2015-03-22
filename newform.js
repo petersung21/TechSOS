@@ -119,6 +119,9 @@ function InvoiceController($scope, $dataBase) {
         ]
 
     };
+    $scope.clickthisshit = function (){
+        $dataBase.getAll();
+    };
 
 
     if (localStorage["invoice"] == "" || localStorage["invoice"] == null) {
@@ -169,19 +172,39 @@ angular.module('dataBase' []).factory('$dataBase', ['$http',
             create: function(params){
                 return $http({
                     method: 'POST',
-                    url: "https://arcane-refuge-1019.herokuapp.com/",
+                    url: "https://arcane-refuge-1019.herokuapp.com/receiveJSON",
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 });
             },
-            getInfo: function(params){
+            getInfo: function(params, idlol){
                 return $http({
                     method: 'GET',
-                    url: "https://arcane-refuge-1019.herokuapp.com/",
-                    data: $.param(params),
-                    header: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    url: "https://arcane-refuge-1019.herokuapp.com/getJSON/" + idlol,
+                    header: { "Accept": "application/json;odata=verbose" }
                 });
-            }
+            },
+            getAll: function (params){
+                return $http({
+                    method: 'GET',
+                    url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
+                    header: { "Accept": "application/json;odata=verbose"}
+                });
+            },
+            update: function (params, idlol){
+                return $http({
+                    method: 'PUT',
+                    url: "https://arcane-refuge-1019.herokuapp.com/updateJSON" +idlol,
+                    data: $.param(params),
+                    header: { 'Content-Type': 'application/x-ww-form-urlencoded'}
+                });
+            },
+            deleteThis: function (params, idlol){
+                return $http({
+                    method: 'DELETE',
+                    url: "https://arcane-refuge-1019.herokuapp.com/updateJSON" +idlol
+                });
+            },
             }
         };
     }
