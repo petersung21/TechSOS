@@ -52,7 +52,7 @@ app.get('/getJSON/:id', function (req,res,next){
     });
 });
 
-app.get('/getEverything:', function (req,res,next){
+app.get('/getEverything', function (req,res,next){
     ticketInvoice.find(function (err, results){
         if (err){
             console.log("Error Dawggg");
