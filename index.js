@@ -37,7 +37,7 @@ app.use (function(req,res,next){
     next();
 });
 
-mongoose.connect('mongodb://phsung:devsung1@ds047571.mongolab.com:47571/db_ticketing')
+mongoose.connect('mongodb://usethisnow:devsung1@ds047571.mongolab.com:47571/db_ticketing')
 var db = mongoose.connection;
 db.once('open', function(){
 
@@ -94,7 +94,7 @@ app.delete('/deleteJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err,results){
         sendItem.remove(function(err){
         if (err){
-            console.log("Error bruhhhh");
+            res.send("Error bruhhhh");
         }else {
             res.send("Successfully Deleted bruhh");
         }
@@ -104,7 +104,7 @@ app.delete('/deleteJSON/:id', function(req,res,next){
     
 });
 
-var port = process.env.PORT || 5000
+var port = process.env.PORT || 5000;
 var server = http.createServer(app);
 server.listen(port, function () {console.log("on port 5000")}); 
         
