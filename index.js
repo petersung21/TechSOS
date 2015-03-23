@@ -70,12 +70,12 @@ app.post('/receiveJSON', function(req,res,next){
     });
     sendItem.save(function (err){
         if (err){
-            console.log ("Something failed yoooo");
+            res.send ("Something failed yoooo");
         }else {
             res.send("Check mongoDB duddeeee");
         }
     });
-    res.send (sendItem);
+    //res.send (sendItem);
 });
 
 app.put('/updateJSON/:id', function(req,res,next){
@@ -91,7 +91,7 @@ app.put('/updateJSON/:id', function(req,res,next){
             }
         });
     });
-    res.send (sendItem);
+    //res.send (sendItem);
 });
 
 app.delete('/deleteJSON/:id', function(req,res,next){
