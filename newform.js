@@ -129,11 +129,14 @@ function InvoiceController($scope, $dataBase, $http) {
 //            z = response.data;
 //            console.log(z);
 //        });
-        $dataBase.create(JSON.stringify($scope.invoice)).then(function(response){
-            x = response.data;
-            console.log(x);
-        });
-        
+//        $dataBase.create(JSON.stringify($scope.invoice)).then(function(response){
+//            x = response.data;
+//            console.log(x);
+//        });
+//        $dataBase.update(JSON.stringify($scope.invoice),"550f8b85eb4f75030046df7f").then(function(response){
+//            x = response.data;
+//            console.log(x);
+//        });
     };
     
     
