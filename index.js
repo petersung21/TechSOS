@@ -68,7 +68,7 @@ app.post('/receiveJSON', function(req,res,next){
         fullInfo: req.body.invoice,
         Assignee: req.body.invoice.employee_info.Assignee,
         dateFrom: req.body.invoice.employee_info.dateFrom,
-        completeInfo: [fullInfo]
+        completeInfo: req.body.items
     });
     sendItem.save(function (err){
         if (err){
@@ -85,7 +85,7 @@ app.put('/updateJSON/:id', function(req,res,next){
         results.fullInfo = req.body.invoice,
         results.Assignee = req.body.invoice.employee_info.Assignee,
         results.dateFrom = req.body.invoice.employee_info.dateFrom,
-        results.completeINfo = req.body.items
+        results.completeInfo = req.body.items
     });
     res.send (sendItem);
 });

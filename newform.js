@@ -98,19 +98,24 @@ function InvoiceController($scope, $dataBase, $http) {
             dateFrom: ""
         },
             items: [
-          { datee: "", dropdown: "", selectedCustomer: "", description: ""}
+          { datee: "", dropdown: "", selectedCustomer: "", description: "", attach: 0}
         ]
 
     };
-
+    
     $scope.clickthisshit = function (){
-//        $http({
-//            method: 'GET',
-//            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
-//            header: { "Accept": "application/json;odata=verbose"}
-//        }).success (function (data, status, headers, config){
-//                   console.log (data);
-//                   });
+        $http({
+            method: 'GET',
+            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
+            header: { "Accept": "application/json;odata=verbose"}
+        }).success (function (data, status, headers, config){
+                   console.log (data);
+                   });
+        $scope.invoice.employee_info.dateFrom = "03/22/2015";
+        $scope.invoice.items[0].dropdown = "A";
+        $scope.invoice.items[0].selectedCustomer = "B";
+        $scope.invoice.items[0].description = "C";
+        console.log($scope.invoice);
         var x, y,z;
 //        $dataBase.getAll().then(function (response){
 //            x = response.data;
@@ -142,7 +147,7 @@ function InvoiceController($scope, $dataBase, $http) {
     }
 
     $scope.addItem = function () {
-        $scope.invoice.items.push({ datee: "", dropdown: "", selectedCustomer: "", description: "" });
+        $scope.invoice.items.push({  datee: "", dropdown: "", selectedCustomer: "", description: "", attach: 0 });
         setTimeout(calling, 0);
     };
 
@@ -186,7 +191,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).success(function(data,status,headers,config){
-                    return ("It Created");
+                    return ("It Created Nigga");
                 }));
             },
             getInfo: function(idlol){
@@ -214,7 +219,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-ww-form-urlencoded'}
                 }).success(function(data,status,headers,config){
-                    return ("it updated");
+                    return ("it updated nigga");
                 }));
             },
             deleteThis: function (idlol){
@@ -222,7 +227,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     method: 'DELETE',
                     url: "https://arcane-refuge-1019.herokuapp.com/deleteJSON/" +idlol
                 }).success(function(data,status,headers,config){
-                    return ("it deleted");
+                    return ("it deleted nigga");
                 }));
             }
         };
