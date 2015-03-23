@@ -129,7 +129,7 @@ function InvoiceController($scope, $dataBase, $http) {
 //            z = response.data;
 //            console.log(z);
 //        });
-        $dataBase.create($scope.invoice).then(function(response){
+        $dataBase.create(JSON.stringify($scope.invoice)).then(function(response){
             x = response.data;
             console.log(x);
         });
@@ -188,7 +188,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                 return ($http({
                     method: 'POST',
                     url: "https://arcane-refuge-1019.herokuapp.com/receiveJSON",
-                    data: $.param(params),
+                    data: params,
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).success(function(data,status,headers,config){
                     return ("It Created Nigga");
@@ -216,7 +216,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                 return ($http({
                     method: 'PUT',
                     url: "https://arcane-refuge-1019.herokuapp.com/updateJSON/" +idlol,
-                    data: $.param(params),
+                    data: params,
                     header: { 'Content-Type': 'application/x-ww-form-urlencoded'}
                 }).success(function(data,status,headers,config){
                     return ("it updated nigga");

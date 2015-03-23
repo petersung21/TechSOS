@@ -64,9 +64,10 @@ app.get('/getEverything', function (req,res,next){
 
 app.post('/receiveJSON', function(req,res,next){
     res.send (req.body);
-//    res.send (req.body.invoice);
-//    res.send (req.body.invoice.employee_info.Assignee);
-//    res.send (req.body.invoice.employee_info);
+    res.send (req.body.invoice);
+    res.send (req.body.invoice.employee_info.Assignee);
+    res.send (req.body.invoice.employee_info);
+    res.send (req.body.items)
 //    var sendItem;
 //    sendItem = new ticketInvoice({
 //        fullInfo: req.body.invoice,
