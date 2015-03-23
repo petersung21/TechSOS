@@ -104,18 +104,18 @@ function InvoiceController($scope, $dataBase, $http) {
     };
     
     $scope.clickthisshit = function (){
-        $http({
-            method: 'GET',
-            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
-            header: { "Accept": "application/json;odata=verbose"}
-        }).success (function (data, status, headers, config){
-                   console.log (data);
-                   });
+//        $http({
+//            method: 'GET',
+//            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
+//            header: { "Accept": "application/json;odata=verbose"}
+//        }).success (function (data, status, headers, config){
+//                   console.log (data);
+//                   });
         $scope.invoice.employee_info.dateFrom = "03/22/2015";
         $scope.invoice.items[0].dropdown = "A";
         $scope.invoice.items[0].selectedCustomer = "B";
         $scope.invoice.items[0].description = "C";
-        console.log($scope.invoice);
+        //console.log($scope.invoice);
         var x, y,z;
 //        $dataBase.getAll().then(function (response){
 //            x = response.data;

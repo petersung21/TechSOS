@@ -63,26 +63,21 @@ app.get('/getEverything', function (req,res,next){
 });
 
 app.post('/receiveJSON', function(req,res,next){
-    res.send (req.body);
-    res.send (req.body.invoice);
-    res.send (req.body.invoice.employee_info.Assignee);
-    res.send (req.body.invoice.employee_info);
-    res.send (req.body.items)
-//    var sendItem;
-//    sendItem = new ticketInvoice({
-//        fullInfo: req.body.invoice,
-//        Assignee: req.body.invoice.employee_info.Assignee,
-//        dateFrom: req.body.invoice.employee_info.dateFrom,
-//        completeInfo: req.body.items
-//    });
-//    sendItem.save(function (err){
-//        if (err){
-//            console.log ("Something failed yoooo");
-//        }else {
-//            res.send("Check mongoDB duddeeee");
-//        }
-//    });
-//    res.send (sendItem);
+    var sendItem;
+    sendItem = new ticketInvoice({
+        fullInfo: req.body.invoice,
+        Assignee: req.body.invoice.employee_info.Assignee,
+        dateFrom: req.body.invoice.employee_info.dateFrom,
+        completeInfo: req.body.items
+    });
+    sendItem.save(function (err){
+        if (err){
+            console.log ("Something failed yoooo");
+        }else {
+            res.send("Check mongoDB duddeeee");
+        }
+    });
+    res.send (sendItem);
 });
 
 app.put('/updateJSON/:id', function(req,res,next){
