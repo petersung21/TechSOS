@@ -15,7 +15,7 @@ var fullInfo = new Schema ({
 });
  
 var ticketinvoice = new Schema ({
-    title: {type:String, require: true},
+    //title: {type:String, require: true},
     Assignee: {type:String, require: true},
     dateFrom: {type: Date, required: true},
     fullInfo: {type: String, required: true},

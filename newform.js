@@ -93,25 +93,24 @@ function InvoiceController($scope, $dataBase, $http) {
     var rowNum = 0;
 
     var empty_invoice = {
-        tax: 13.00,
-        invoice_number: 0,
         employee_info: {
-            name: "",
+            Assignee: "",
             dateFrom: ""
         },
             items: [
-          { qty: 0, description: "", cost: 0.00, totall:0,taxx:0, attach: 0 }
+          { datee: "", dropdown: "", selectedCustomer: "", description: ""}
         ]
 
     };
+
     $scope.clickthisshit = function (){
-        $http({
-            method: 'GET',
-            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
-            header: { "Accept": "application/json;odata=verbose"}
-        }).success (function (data, status, headers, config){
-                   console.log (data);
-                   });
+//        $http({
+//            method: 'GET',
+//            url: "https://arcane-refuge-1019.herokuapp.com/getEverything",
+//            header: { "Accept": "application/json;odata=verbose"}
+//        }).success (function (data, status, headers, config){
+//                   console.log (data);
+//                   });
         var x, y,z;
 //        $dataBase.getAll().then(function (response){
 //            x = response.data;
@@ -125,6 +124,10 @@ function InvoiceController($scope, $dataBase, $http) {
 //            z = response.data;
 //            console.log(z);
 //        });
+        $dataBase.create($scope.invoice).then(function(response){
+            x = response.data;
+            console.log(x);
+        });
         
     };
     
@@ -139,7 +142,7 @@ function InvoiceController($scope, $dataBase, $http) {
     }
 
     $scope.addItem = function () {
-        $scope.invoice.items.push({  qty: 0, cost: 0, totall:0,taxx:0,description: "", attach: 0 });
+        $scope.invoice.items.push({ datee: "", dropdown: "", selectedCustomer: "", description: "" });
         setTimeout(calling, 0);
     };
 
@@ -183,7 +186,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).success(function(data,status,headers,config){
-                    return ("It Created Nigga");
+                    return ("It Created");
                 }));
             },
             getInfo: function(idlol){
@@ -211,7 +214,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     data: $.param(params),
                     header: { 'Content-Type': 'application/x-ww-form-urlencoded'}
                 }).success(function(data,status,headers,config){
-                    return ("it updated nigga");
+                    return ("it updated");
                 }));
             },
             deleteThis: function (idlol){
@@ -219,7 +222,7 @@ angular.module('dataBase', []).factory('$dataBase', ['$http',
                     method: 'DELETE',
                     url: "https://arcane-refuge-1019.herokuapp.com/deleteJSON/" +idlol
                 }).success(function(data,status,headers,config){
-                    return ("it deleted nigga");
+                    return ("it deleted");
                 }));
             }
         };
