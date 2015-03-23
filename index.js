@@ -86,6 +86,13 @@ app.put('/updateJSON/:id', function(req,res,next){
         results.Assignee = req.body.employee_info.Assignee,
         results.dateFrom = req.body.employee_info.dateFrom,
         results.completeInfo = req.body.items
+        results.save(function(err){
+            if (err){
+                console.log ("Something failed yooo");
+            }else {
+                res.send ("Check mongoDB dudeeee");
+            }
+        });
     });
     res.send (sendItem);
 });
