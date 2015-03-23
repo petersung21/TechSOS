@@ -18,7 +18,6 @@ var ticketinvoice = new Schema ({
     //title: {type:String, require: true},
     Assignee: {type:String, require: true},
     dateFrom: {type: Date, required: true},
-    fullInfo: {type: String, required: true},
     completeInfo: [fullInfo],
     modified: {type: Date, default: Date.now}
 });
@@ -65,7 +64,6 @@ app.get('/getEverything', function (req,res,next){
 app.post('/receiveJSON', function(req,res,next){
     var sendItem;
     sendItem = new ticketInvoice({
-        fullInfo: req.body,
         Assignee: req.body.employee_info.Assignee,
         dateFrom: req.body.employee_info.dateFrom,
         completeInfo: req.body.items
@@ -82,7 +80,6 @@ app.post('/receiveJSON', function(req,res,next){
 
 app.put('/updateJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err, results){
-        results.fullInfo = req.body,
         results.Assignee = req.body.employee_info.Assignee,
         results.dateFrom = req.body.employee_info.dateFrom,
         results.completeInfo = req.body.items
