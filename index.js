@@ -65,9 +65,9 @@ app.get('/getEverything', function (req,res,next){
 app.post('/receiveJSON', function(req,res,next){
     var sendItem;
     sendItem = new ticketInvoice({
-        fullInfo: req.body.invoice,
-        Assignee: req.body.invoice.employee_info.Assignee,
-        dateFrom: req.body.invoice.employee_info.dateFrom,
+        fullInfo: req.body,
+        Assignee: req.body.employee_info.Assignee,
+        dateFrom: req.body.employee_info.dateFrom,
         completeInfo: req.body.items
     });
     sendItem.save(function (err){
@@ -82,9 +82,9 @@ app.post('/receiveJSON', function(req,res,next){
 
 app.put('/updateJSON/:id', function(req,res,next){
     ticketInvoice.findById(req.params.id, function(err, results){
-        results.fullInfo = req.body.invoice,
-        results.Assignee = req.body.invoice.employee_info.Assignee,
-        results.dateFrom = req.body.invoice.employee_info.dateFrom,
+        results.fullInfo = req.body,
+        results.Assignee = req.body.employee_info.Assignee,
+        results.dateFrom = req.body.employee_info.dateFrom,
         results.completeInfo = req.body.items
     });
     res.send (sendItem);
