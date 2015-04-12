@@ -6,6 +6,40 @@ var MongoClient = require('mongodb').MongoClient
     , format = require('util').format;
 var bodyParser = require('body-parser');
 var Schema = mongoose.Schema;
+var passport = require('passport');
+var GooglePlusStrategy = require('passport-google-plus');
+var googlepassport = require('passport-google').Strategy;
+var google = require('googleapis');
+var oauth2 = google.auth.OAuth2;
+
+var scopes =[
+    'https://www.googleapis.com/auth/calendar',
+    'https://www.googleapis.com/auth/gmail.compose'
+];
+
+passport.use(new GooglePlusStrategy({
+        clientID = 'YOUR_CLIENT_ID',
+        clientSecret = 'YOUR_CLIENT_SECRET'
+    },
+    function (tokens,profile,done){
+        done(null,profile,tokens);
+    }
+))
+
+var clientID = ;
+var clientSecret = ;
+var redirectlink = ;
+
+passport.use(new GoogleStrategy({
+    returnURL: 'http://www.example.com/auth/google/return',
+    realm: 'http://www.example.com/'
+  },
+  function(identifier, profile, done) {
+    User.findOrCreate({ openId: identifier }, function(err, user) {
+      done(err, user);
+    });
+  }
+));
  
 var fullInfo = new Schema ({
     datee: String,
