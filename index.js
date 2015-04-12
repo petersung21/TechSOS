@@ -17,22 +17,22 @@ var scopes =[
     'https://www.googleapis.com/auth/gmail.compose'
 ];
 
-passport.use(new GooglePlusStrategy({
+/*passport.use(new GooglePlusStrategy({
         clientID = 'YOUR_CLIENT_ID',
         clientSecret = 'YOUR_CLIENT_SECRET'
     },
     function (tokens,profile,done){
         done(null,profile,tokens);
     }
-))
+))*/
 
 var clientID = ;
 var clientSecret = ;
 var redirectlink = ;
 
-passport.use(new GoogleStrategy({
-    returnURL: 'http://www.example.com/auth/google/return',
-    realm: 'http://www.example.com/'
+passport.use(new googlepassport({
+    returnURL: 'http://petersung21.github.io/TechSOS/',
+    realm: 'http://petersung21.github.io/TechSOS/'
   },
   function(identifier, profile, done) {
     User.findOrCreate({ openId: identifier }, function(err, user) {
@@ -40,6 +40,19 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
+
+// Redirect the user to Google for authentication.  When complete, Google
+// will redirect the user back to the application at
+//     /auth/google/return
+app.get('/auth/google', passport.authenticate('google'));
+
+// Google will redirect the user to this URL after authentication.  Finish
+// the process by verifying the assertion.  If valid, the user will be
+// logged in.  Otherwise, authentication has failed.
+app.get('/auth/google/return', 
+  passport.authenticate('google', { successRedirect: '/',
+                                    failureRedirect: '/login' }));
+
  
 var fullInfo = new Schema ({
     datee: String,
