@@ -17,18 +17,19 @@ var scopes =[
     'https://www.googleapis.com/auth/gmail.compose'
 ];
 
-/*passport.use(new GooglePlusStrategy({
-        clientID = 'YOUR_CLIENT_ID',
-        clientSecret = 'YOUR_CLIENT_SECRET'
-    },
-    function (tokens,profile,done){
-        done(null,profile,tokens);
-    }
-))*/
+var clientID = 1079143062001-i7r6t2lem1poi4v572llqdovhv84m4kf.apps.googleusercontent.com;
+var clientSecret = MTopiFvRiqFVE3QOSgi5RY6t ;
+var redirectlink = http://petersung21.github.io/TechSOS/;
 
-var clientID = ;
-var clientSecret = ;
-var redirectlink = ;
+passport.use(new GooglePlusStrategy({
+    clientId: clientID,
+    clientSecret: clientSecret
+  },
+  function(tokens, profile, done) {
+    // Create or update user, call done() when complete... 
+    done(null, profile, tokens);
+  }
+));
 
 passport.use(new googlepassport({
     returnURL: 'http://petersung21.github.io/TechSOS/',
@@ -50,8 +51,8 @@ app.get('/auth/google', passport.authenticate('google'));
 // the process by verifying the assertion.  If valid, the user will be
 // logged in.  Otherwise, authentication has failed.
 app.get('/auth/google/return', 
-  passport.authenticate('google', { successRedirect: '/',
-                                    failureRedirect: '/login' }));
+  passport.authenticate('google', { successRedirect: 'http://petersung21.github.io/TechSOS/',
+                                    failureRedirect: 'http://petersung21.github.io/TechSOS/' }));
 
  
 var fullInfo = new Schema ({
