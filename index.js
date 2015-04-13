@@ -17,7 +17,7 @@ var scopes =[
     'https://www.googleapis.com/auth/gmail.compose'
 ];
 
-var clientID = 1079143062001-i7r6t2lem1poi4v572llqdovhv84m4kf.apps.googleusercontent.com;
+/*var clientID = 1079143062001-i7r6t2lem1poi4v572llqdovhv84m4kf.apps.googleusercontent.com;
 var clientSecret = MTopiFvRiqFVE3QOSgi5RY6t ;
 var redirectlink = http://petersung21.github.io/TechSOS/;
 
@@ -29,7 +29,7 @@ passport.use(new GooglePlusStrategy({
     // Create or update user, call done() when complete... 
     done(null, profile, tokens);
   }
-));
+));*/
 
 passport.use(new googlepassport({
     returnURL: 'http://petersung21.github.io/TechSOS/',
