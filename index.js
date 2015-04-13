@@ -17,6 +17,17 @@ var scopes =[
     'https://www.googleapis.com/auth/gmail.compose'
 ];
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 /*var clientID = 1079143062001-i7r6t2lem1poi4v572llqdovhv84m4kf.apps.googleusercontent.com;
 var clientSecret = MTopiFvRiqFVE3QOSgi5RY6t ;
 var redirectlink = http://petersung21.github.io/TechSOS/;
