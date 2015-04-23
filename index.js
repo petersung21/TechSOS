@@ -7,69 +7,19 @@ var MongoClient = require('mongodb').MongoClient
 var bodyParser = require('body-parser');
 var Schema = mongoose.Schema;
 var passport = require('passport');
-var GooglePlusStrategy = require('passport-google-plus');
-var googlepassport = require('passport-google').Strategy;
+//var GooglePlusStrategy = require('passport-google-plus');
+//var googlepassport = require('passport-google').Strategy;
 var google = require('googleapis');
-var oauth2 = google.auth.OAuth2;
+//var oauth2 = google.auth.OAuth2;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var nodemailer = require("nodemailer");
 
-var scopes =[
-    'https://www.googleapis.com/auth/calendar',
-    'https://www.googleapis.com/auth/gmail.compose'
-];
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-/*var clientID = 1079143062001-i7r6t2lem1poi4v572llqdovhv84m4kf.apps.googleusercontent.com;
-var clientSecret = MTopiFvRiqFVE3QOSgi5RY6t ;
-var redirectlink = http://petersung21.github.io/TechSOS/;
-
-passport.use(new GooglePlusStrategy({
-    clientId: clientID,
-    clientSecret: clientSecret
-  },
-  function(tokens, profile, done) {
-    // Create or update user, call done() when complete... 
-    done(null, profile, tokens);
-  }
-));*/
-
-passport.use(new googlepassport({
-    returnURL: 'http://petersung21.github.io/TechSOS/',
-    realm: 'http://petersung21.github.io/TechSOS/'
-  },
-  function(identifier, profile, done) {
-    User.findOrCreate({ openId: identifier }, function(err, user) {
-      done(err, user);
-    });
-  }
-));
-
-// Redirect the user to Google for authentication.  When complete, Google
-// will redirect the user back to the application at
-//     /auth/google/return
-app.get('/auth/google', passport.authenticate('google'));
-
-// Google will redirect the user to this URL after authentication.  Finish
-// the process by verifying the assertion.  If valid, the user will be
-// logged in.  Otherwise, authentication has failed.
-app.get('/auth/google/return', 
-  passport.authenticate('google', { successRedirect: 'http://petersung21.github.io/TechSOS/',
-                                    failureRedirect: 'http://petersung21.github.io/TechSOS/' }));
-
- 
 var fullInfo = new Schema ({
     datee: String,
     dropdown: String,
     selectedCustomer: String,
+    selectedCustomermail:String,
     description: String,
 });
  
@@ -131,6 +81,50 @@ app.post('/receiveJSON', function(req,res,next){
         if (err){
             res.send ("Something failed yoooo");
         }else {
+            var generator = require('xoauth2').createXOAuth2Generator({
+                user: "techSOSnotify@gmail.com", // Your gmail address.
+
+                clientId: "1079143062001-i7r6t2lem1poi4v572llqdovhv84m4kf.apps.googleusercontent.com",
+                clientSecret: "MTopiFvRiqFVE3QOSgi5RY6t",
+                refreshToken: "1/_J5BVoX0jXj7ys2RaFDI1tqCwtrTQmnytdtikMi7KHY",
+            });
+
+
+
+            // listen for token updates
+            //generator.on('token', function(token){
+            //    console.log('New token for %s: %s', token.user, token.accessToken);
+            //});
+
+
+            // login
+            var smtpTransport = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    xoauth2: generator
+                }
+            });
+
+            for (var i=0;i<sendItem.completeInfo.length;i++){
+                var mailOptions = {
+                    to: sendItem.completeInfo[i].selectedCustomermail,
+                    subject: 'Invoice Assigned By ' + sendItem.Assignee + ' on ' + sendItem.dateFrom,
+                    text: 'Task: ' + sendItem.completeInfo[i].description + 'Due: ' + sendItem.completeInfo[i].datee,
+                    html: '<p>'+ 'Task: ' + sendItem.completeInfo[i].description +'</p>'+
+                          '<p>'+ 'Due: ' + sendItem.completeInfo[i].datee +'</p>'
+                };
+
+
+                smtpTransport.sendMail(mailOptions, function(error, info) {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Message sent: ' + info.response);
+                  }
+                  smtpTransport.close();
+                });
+            }
+            
             res.send("Check mongoDB duddeeee");
         }
     });
