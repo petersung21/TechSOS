@@ -53,7 +53,7 @@ db.once('open', function(){
 app.get('/getJSON/:id', function (req,res,next){
     ticketInvoice.findById(req.params.id,function (err, results){
         if (err){
-            console.log ("Error Dawgggg");
+            console.log ("Error");
         }else {
             res.send (results);
         }
@@ -63,7 +63,7 @@ app.get('/getJSON/:id', function (req,res,next){
 app.get('/getEverything', function (req,res,next){
     ticketInvoice.find(function (err, results){
         if (err){
-            console.log("Error Dawggg");
+            console.log("Error");
         }else {
             res.send(results);
         }
@@ -79,7 +79,7 @@ app.post('/receiveJSON', function(req,res,next){
     });
     sendItem.save(function (err){
         if (err){
-            res.send ("Something failed yoooo");
+            res.send ("Something failed");
         }else {
             var generator = require('xoauth2').createXOAuth2Generator({
                 user: "techSOSnotify@gmail.com", // Your gmail address.
@@ -125,7 +125,7 @@ app.post('/receiveJSON', function(req,res,next){
                 });
             }
             
-            res.send("Check mongoDB duddeeee");
+            res.send("Check mongoDB");
         }
     });
 });
@@ -137,9 +137,9 @@ app.put('/updateJSON/:id', function(req,res,next){
         results.completeInfo = req.body.items
         results.save(function(err){
             if (err){
-                console.log ("Something failed yooo");
+                console.log ("Something failed");
             }else {
-                res.send ("Check mongoDB dudeeee");
+                res.send ("Check mongoDB");
             }
         });
     });
